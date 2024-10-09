@@ -319,7 +319,8 @@ require('lazy').setup({
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
         { '<leader>w', group = '[W]orkspace' },
-        { '<leader>t', group = '[T]oggle' },
+        { '<leader>t', group = '[T]oggles' },
+        { '<leader>T', group = '[T]est' },
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
@@ -618,6 +619,7 @@ require('lazy').setup({
         -- ts_ls = {},
         --
 
+        csharp_ls = {},
         lua_ls = {
           -- cmd = {...},
           -- filetypes = { ...},
@@ -664,7 +666,24 @@ require('lazy').setup({
       }
     end,
   },
-
+  {
+    'nvim-neotest/neotest',
+    dependencies = {
+      'nvim-neotest/nvim-nio',
+      'nvim-lua/plenary.nvim',
+      'antoinemadec/FixCursorHold.nvim',
+      'nvim-treesitter/nvim-treesitter',
+      'IssaFalcon/neotest-dotnet',
+    },
+    confing = function()
+      require('neotest').setup {
+        adapters = {
+          require 'neotest-dotnet',
+        },
+      }
+      vim.keymap.set('n', '<leader>Tr', ':lua require("neotest").run.run()', { desc = 'run the closest test', noremap = true, silent = true })
+    end,
+  },
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
