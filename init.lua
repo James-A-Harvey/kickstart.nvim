@@ -675,13 +675,11 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter',
       'IssaFalcon/neotest-dotnet',
     },
-    confing = function()
-      require('neotest').setup {
-        adapters = {
-          require 'neotest-dotnet',
-        },
-      }
-      vim.keymap.set('n', '<leader>Tr', ':lua require("neotest").run.run()', { desc = 'run the closest test', noremap = true, silent = true })
+    config = function()
+      require('neotest').setup(require 'neotest-dotnet' {})
+      vim.keymap.set('n', '<leader>tt', function()
+        require('neotest').run.run(vim.fn.expand '%')
+      end, { desc = 'Run File' })
     end,
   },
   { -- Autoformat
